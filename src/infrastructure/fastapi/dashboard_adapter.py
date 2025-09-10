@@ -4,10 +4,12 @@ Path: infrastructure/fastapi/dashboard_adapter.py
 
 from fastapi import APIRouter
 from src.interface_adapters.controllers.dashboard_controller import get_dashboard_v1
+from src.interface_adapters.presenters.dashboard_presenter import present_dashboard
 
 router = APIRouter(tags=["dashboard"])
 
 @router.get("/v1/dashboard.php")
 def dashboard_endpoint_v1():
     """Adaptador HTTP para get_dashboard (v1 estandarizado)"""
-    return get_dashboard_v1()
+    data = get_dashboard_v1()
+    return present_dashboard(data)
