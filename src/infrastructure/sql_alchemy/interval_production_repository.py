@@ -1,11 +1,13 @@
 """
-Repository para IntervalProduction
 Path: src/infrastructure/sql_alchemy/interval_production_repository.py
+REVISAR ACÁ, PORQUE NO ESTÁ FUNCIOANDO, ES SÓLO A MODO DE EJEMPLO
+MODIFICAR EL CÓDIGO EN FUNCIÓN DE LA TABLA REAL
 """
-
 
 from typing import List
 from sqlalchemy.orm import Session
+from datetime import datetime, timedelta
+
 from src.infrastructure.sql_alchemy.models import IntervalProduction
 from src.interface_adapters.gateways.interval_production_repository import IntervalProductionRepositoryInterface
 
@@ -16,8 +18,12 @@ class IntervalProductionRepository(IntervalProductionRepositoryInterface):
         self.session = session
 
     def get_by_date_and_turno(self, fecha: str, turno: str) -> List[IntervalProduction]:
-        # Ejemplo básico: filtrar por fecha (asumiendo que unixtime representa la fecha)
-        # Debes adaptar esto a tu modelo real
-        return self.session.query(IntervalProduction).filter(
-            # IntervalProduction.unixtime.between(...)
-        ).all()
+        start_dt = datetime.strptime(fecha, "%Y-%m-%d")
+        end_dt = start_dt + timedelta(days=1)
+        start_ts = int(start_dt.timestamp())
+        end_ts = int(end_dt.timestamp())
+        query = self.session.query(IntervalProduction).filter(
+            IntervalProduction.unixtime >= start_ts,
+            IntervalProduction.unixtime < end_ts
+        )
+        return query.all()
