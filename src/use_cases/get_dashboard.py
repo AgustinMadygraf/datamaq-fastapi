@@ -5,13 +5,14 @@ Path: src/use_cases/get_dashboard.py
 
 from src.entities.dashboard import Dashboard
 
-def get_dashboard():
-    """Lógica de negocio principal para obtener los datos del dashboard"""
+def get_dashboard(periodo, fecha, turno):
+    "Lógica de negocio principal para obtener los datos del dashboard"
     return Dashboard(
         meta={
             "title": "Dashboard Test",
-            "date": "2025-09-10",
-            "turno": None
+            "date": fecha,
+            "turno": turno,
+            "periodo": periodo
         },
         series={
             "hoy": {
