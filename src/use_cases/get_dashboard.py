@@ -3,22 +3,16 @@ Caso de uso para obtener dashboard
 Path: src/use_cases/get_dashboard.py
 """
 
-import locale
 from datetime import datetime
+from babel.dates import format_datetime
 from src.entities.dashboard import Dashboard
 
 def get_dashboard(periodo, fecha, turno):
     "Lógica de negocio principal para obtener los datos del dashboard"
-    # Configura el locale a español
-    try:
-        locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-    except locale.Error:
-        locale.setlocale(locale.LC_TIME, 'Spanish_Spain.1252')  # Para Windows
-
     # Convierte la fecha a objeto datetime (asumiendo formato 'YYYY-MM-DD')
     dt = datetime.strptime(fecha, "%Y-%m-%d")
-    # Formatea la fecha como 'Miércoles 10 de septiembre del 2025'
-    title = dt.strftime("%A %d de %B del %Y").capitalize()
+    # Formatea la fecha como 'miércoles 10 de septiembre del 2025'
+    title = format_datetime(dt, "EEEE d 'de' MMMM 'del' yyyy", locale='es').capitalize()
 
     return Dashboard(
         meta={
