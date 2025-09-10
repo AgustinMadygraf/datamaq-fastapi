@@ -5,7 +5,7 @@ Path: interface_adapters/controllers/static_controller.py
 import os
 
 from src.interface_adapters.presenters.static_presenter import present_static_file, present_not_found
-from src.interface_adapters.gateway.file_gateway import get_file
+from src.interface_adapters.gateways.file_gateway import get_file
 from src.shared.config import get_static_path
 
 def get_index_html():

@@ -11,10 +11,9 @@ router = APIRouter(tags=["dashboard"])
 
 @router.get("/v1/dashboard.php")
 def dashboard_endpoint_v1(
-    periodo: str = Query("dia"),
     fecha: str = Query(...),
     turno: str = Query(None)
 ):
     """Adaptador HTTP para get_dashboard (v1 estandarizado)"""
-    data = get_dashboard_v1(periodo, fecha, turno)
+    data = get_dashboard_v1(fecha, turno)
     return present_dashboard(data)
