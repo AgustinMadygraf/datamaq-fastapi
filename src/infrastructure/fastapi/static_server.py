@@ -27,10 +27,10 @@ app.add_middleware(
 )
 
 static_path = get_static_path()
-public_dir = os.path.join(static_path, "assets")
 print(f"Static path: {static_path}")
 
-app.mount("/assets", StaticFiles(directory=public_dir), name="assets")
+# Monta toda la carpeta dist en /datamaq-vue/dist
+app.mount("/datamaq-vue/dist", StaticFiles(directory=static_path), name="datamaq-vue-dist")
 
 # Incluir el router de la API
 app.include_router(dashboard_router, prefix="/api")
