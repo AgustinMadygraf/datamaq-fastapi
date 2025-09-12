@@ -1,8 +1,7 @@
-FROM python:3.11-slim-bullseye
+FROM python:3.13-slim-bookworm
 
 WORKDIR /app
 
-# Actualiza y limpia paquetes del sistema para reducir vulnerabilidades
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get autoremove -y \
@@ -10,7 +9,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+# Fuerza la versión segura de setuptools al final
+RUN pip install --no-cache-dir setuptools==78.1.1
 
 COPY . .
 
