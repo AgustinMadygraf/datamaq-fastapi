@@ -13,7 +13,29 @@ from fastapi.responses import FileResponse, HTMLResponse
 from src.shared.config import get_static_path
 
 from src.infrastructure.fastapi.dashboard_adapter import router as dashboard_router
-from src.interface_adapters.controllers.static_controller import get_favicon
+
+def get_favicon():
+    "Obtiene el archivo favicon.ico"
+    favicon_path = os.path.join(get_static_path(), "favicon.ico")
+    content = get_file(favicon_path)
+    if content is not None:
+        return present_static_file(content, "image/x-icon")
+    return present_static_file(b"", "image/x-icon", 204)
+
+def get_file(path: str) -> bytes | None:
+    "Obtiene el contenido de un archivo"
+    if os.path.exists(path):
+        with open(path, "rb") as f:
+            return f.read()
+    return None
+
+def present_static_file(content: bytes, mime_type: str, status_code: int = 200):
+    "Presenta un archivo estático"
+    return {
+        "content": content,
+        "mime_type": mime_type,
+        "status_code": status_code
+    }
 
 
 app = FastAPI(title="DataMaq Gateway", version="0.1.0")
@@ -77,3 +99,4 @@ async def serve_spa(path: str):
         with open(os.path.join(static_path, "index.html"), "r", encoding="utf-8") as f:
             html_content = f.read()
         return HTMLResponse(content=html_content)
+

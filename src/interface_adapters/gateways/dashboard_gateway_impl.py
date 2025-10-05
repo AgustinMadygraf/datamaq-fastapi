@@ -7,6 +7,7 @@ UBICADO EN interval_production_repository.py
 
 
 from datetime import datetime
+
 from src.interface_adapters.gateways.dashboard_gateway import DashboardGateway
 from src.interface_adapters.gateways.interval_production_repository import IntervalProductionRepositoryInterface
 

@@ -1,5 +1,5 @@
 """
-Presenter para el dashboard
+Path: src/interface_adapters/presenters/dashboard_presenter.py
 """
 
 from fastapi.responses import JSONResponse
