@@ -1,6 +1,5 @@
-# pylint disable
 """
-Path: tools/db_inicializer.py
+Path: src/infrastructure/sql_alchemy/database_setup.py
 """
 
 import os
